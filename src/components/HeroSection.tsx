@@ -1,74 +1,133 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef, useSyncExternalStore } from "react";
+import { MagneticButton } from "@/components/ui/MagneticButton";
+import { byId } from "@/lib/images";
 
-type HeroSectionProps = {
-  backgroundImageSrc?: string;
-  backgroundVideoSrc?: string;
-  overlayOpacity?: number; // 0 to 1
-};
+function subscribeReducedMotion(callback: () => void) {
+  const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+  mq.addEventListener("change", callback);
+  return () => mq.removeEventListener("change", callback);
+}
 
-export default function HeroSection({
-  backgroundImageSrc,
-  backgroundVideoSrc,
-  overlayOpacity = 0.35,
-}: HeroSectionProps) {
-  const hasMedia = Boolean(backgroundImageSrc || backgroundVideoSrc);
+function getReducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function getServerSnapshot() {
+  return false;
+}
+
+export default function HeroSection() {
+  const ref = useRef<HTMLElement>(null);
+  const reducedMotion = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotion,
+    getServerSnapshot
+  );
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.3]);
+
+  const primary = byId(17);
+  const depth = byId(20);
 
   return (
-    <motion.section
-      className={
-        hasMedia
-          ? "relative min-h-screen px-6 py-32 flex flex-col items-center justify-center text-white overflow-hidden"
-          : "min-h-screen bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-300 text-gray-900 px-6 py-32 text-center flex flex-col items-center justify-center"
-      }
-      initial={{ opacity: 0, y: -40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
+    <section
+      ref={ref}
+      className="relative flex min-h-[100dvh] items-end overflow-hidden bg-surface-dark pb-20 pt-32 md:items-center md:pb-28"
     >
-      {hasMedia && (
-        <>
-          {backgroundVideoSrc ? (
-            <video
-              className="absolute inset-0 h-full w-full object-cover z-0"
-              src={backgroundVideoSrc}
-              autoPlay
-              muted
-              loop
-              playsInline
-            />
-          ) : null}
-          {backgroundImageSrc ? (
-            <Image
-              src={backgroundImageSrc}
-              alt="Hero background"
-              fill
-              priority
-              className="object-cover z-0"
-            />
-          ) : null}
-          <div
-            className="absolute inset-0 bg-black z-10"
-            style={{ opacity: overlayOpacity }}
+      <motion.div
+        className="absolute inset-0 z-0"
+        style={reducedMotion ? undefined : { y: bgY }}
+      >
+        {!reducedMotion ? (
+          <video
+            className="absolute inset-0 h-full w-full object-cover"
+            src="/background_video.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
           />
-        </>
-      )}
+        ) : primary ? (
+          <Image
+            src={primary.src}
+            alt={primary.alt}
+            fill
+            priority
+            className="object-cover"
+          />
+        ) : null}
+        {depth && reducedMotion ? (
+          <div className="absolute inset-0 opacity-40 mix-blend-overlay">
+            <Image
+              src={depth.src}
+              alt=""
+              fill
+              className="object-cover"
+              aria-hidden
+            />
+          </div>
+        ) : null}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#12100e] via-[#12100e]/55 to-[#12100e]/30" />
+      </motion.div>
 
-      <div className="mx-auto w-full max-w-7xl px-6">
-        <div className="relative z-20">
-          <h1 className="text-4xl sm:text-6xl font-bold mb-6 drop-shadow-lg">
-            Premium catering & event experiences across Kerala & Tamil Nadu
-          </h1>
-          <p className="mb-10 text-lg sm:text-xl font-light drop-shadow">
-            Experience the best of Kerala & Tamil Nadu with our premium catering
-            & event services.
-          </p>
-          <button className="bg-yellow-600 hover:bg-yellow-700 text-white font-semibold py-3 px-8 rounded-full shadow-lg transition">
-            Book Your Event
-          </button>
-        </div>
-      </div>
-    </motion.section>
+      <motion.div
+        className="container-wide relative z-10 px-6"
+        style={reducedMotion ? undefined : { y: textY, opacity }}
+      >
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+          className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-accent-light"
+        >
+          Kerala & Tamil Nadu
+        </motion.p>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 32 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          className="text-display max-w-4xl text-[clamp(2.75rem,7vw,5.5rem)] font-semibold text-white"
+        >
+          Events crafted with cinematic scale and Southern hospitality
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.35 }}
+          className="mt-6 max-w-xl text-base leading-relaxed text-white/75 md:text-lg"
+        >
+          Golden Spike designs premium catering experiences — from intimate
+          gatherings to thousand-guest productions — with flawless service and
+          atmosphere.
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.5 }}
+          className="mt-10 flex flex-wrap gap-4"
+        >
+          <MagneticButton href="/#featured" variant="primary">
+            Explore our events
+          </MagneticButton>
+          <MagneticButton href="/contact" variant="outline">
+            Plan your event
+          </MagneticButton>
+        </motion.div>
+      </motion.div>
+    </section>
   );
 }
