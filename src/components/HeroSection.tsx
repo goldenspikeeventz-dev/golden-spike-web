@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "motion/react";
 import { useRef, useSyncExternalStore } from "react";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { byId } from "@/lib/images";

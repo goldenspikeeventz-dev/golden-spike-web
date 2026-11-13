@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { BRAND_NAME } from "@/lib/contact";
 import { cn } from "@/lib/utils";
 
@@ -16,7 +16,9 @@ const links = [
 export default function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileMenuAtPath, setMobileMenuAtPath] = useState<string | null>(null);
+  const open = mobileMenuOpen && mobileMenuAtPath === pathname;
   const onHome = pathname === "/";
 
   useEffect(() => {
@@ -26,9 +28,15 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
+  const toggleMobileMenu = () => {
+    if (open) {
+      setMobileMenuOpen(false);
+      setMobileMenuAtPath(null);
+    } else {
+      setMobileMenuOpen(true);
+      setMobileMenuAtPath(pathname);
+    }
+  };
 
   const transparent = onHome && !scrolled;
 
@@ -80,7 +88,7 @@ export default function Navbar() {
             "relative z-[60] flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden",
             transparent ? "text-white" : "text-foreground"
           )}
-          onClick={() => setOpen((v) => !v)}
+          onClick={toggleMobileMenu}
         >
           <span
             className={cn(
@@ -122,7 +130,10 @@ export default function Navbar() {
                   <Link
                     href={item.href}
                     className="font-display text-4xl text-white"
-                    onClick={() => setOpen(false)}
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      setMobileMenuAtPath(null);
+                    }}
                   >
                     {item.label}
                   </Link>
