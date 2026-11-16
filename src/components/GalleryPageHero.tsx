@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import { motion } from "motion/react";
-import { byId } from "@/lib/images";
+import { byId, siteImages } from "@/lib/images";
 
 export default function GalleryPageHero() {
-  const heroImage = byId(17) ?? byId(20);
+  const heroImage = byId(38) ?? byId(25) ?? byId(17);
+  const frameCount = siteImages.length;
 
   return (
     <section className="relative overflow-hidden border-b border-border bg-surface-dark pb-16 pt-32 text-white md:pb-20 md:pt-40">
@@ -34,7 +35,7 @@ export default function GalleryPageHero() {
           transition={{ delay: 0.1 }}
           className="text-display mt-4 max-w-3xl text-[clamp(2.5rem,6vw,4.5rem)] font-semibold"
         >
-          Twenty-two frames from the floor
+          {frameCount} frames from the floor
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 16 }}

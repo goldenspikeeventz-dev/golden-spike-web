@@ -22,9 +22,19 @@ const featured = [
     imageId: 14,
   },
   {
-    title: "Destination wedding finale",
-    subtitle: "Sunset mandap · midnight dessert bar",
-    imageId: 15,
+    title: "Beachfront wedding production",
+    subtitle: "Ocean-stage décor · golden-hour vows",
+    imageId: 35,
+  },
+  {
+    title: "Sparkler grand entrance",
+    subtitle: "Cold sparks · confetti · live procession",
+    imageId: 48,
+  },
+  {
+    title: "Confetti celebration finale",
+    subtitle: "Pyrotechnics · floor fog · guest immersion",
+    imageId: 43,
   },
 ];
 

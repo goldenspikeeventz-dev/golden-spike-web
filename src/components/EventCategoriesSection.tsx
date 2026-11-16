@@ -6,11 +6,11 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { byId } from "@/lib/images";
 
 const categories = [
-  { label: "Weddings", imageId: 7 },
-  { label: "Corporate", imageId: 8 },
-  { label: "Destinations", imageId: 9 },
-  { label: "Institutional", imageId: 10 },
-  { label: "Private soirées", imageId: 11 },
+  { label: "Weddings", imageId: 50 },
+  { label: "Corporate", imageId: 26 },
+  { label: "Destinations", imageId: 35 },
+  { label: "Institutional", imageId: 53 },
+  { label: "Private soirées", imageId: 54 },
 ];
 
 export default function EventCategoriesSection() {
