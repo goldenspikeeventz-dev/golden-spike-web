@@ -117,9 +117,8 @@ export default function ContactPageContent() {
         >
           <h2 className="font-display text-3xl font-semibold">Service areas</h2>
           <p className="mt-3 max-w-2xl text-muted leading-relaxed">
-            Our production kitchens and event captains operate across{" "}
-            {SERVICE_AREAS.join(" and ")}. Destination events elsewhere in South
-            India are available by arrangement.
+            We are headquartered in Kodungallur, Thrissur, and produce events
+            across {SERVICE_AREAS.join(" and ")}.
           </p>
           <ul className="mt-6 flex flex-wrap gap-3">
             {SERVICE_AREAS.map((area) => (

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef, useSyncExternalStore } from "react";
+import { BrandLogo } from "@/components/BrandLogo";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { byId } from "@/lib/images";
 
@@ -85,13 +86,27 @@ export default function HeroSection() {
         className="container-wide relative z-10 px-6"
         style={reducedMotion ? undefined : { y: textY, opacity }}
       >
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.05 }}
+          className="pointer-events-none mb-6 w-full max-w-xl opacity-95 sm:max-w-2xl"
+        >
+          <BrandLogo
+            variant="lockup"
+            tone="onDark"
+            priority
+            className="h-auto w-auto max-w-full sm:max-w-lg md:max-w-xl lg:max-w-2xl"
+          />
+        </motion.div>
+
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
           className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-accent-light"
         >
-          Kerala & Tamil Nadu
+          Kerala
         </motion.p>
 
         <motion.h1
@@ -109,7 +124,7 @@ export default function HeroSection() {
           transition={{ duration: 0.7, delay: 0.35 }}
           className="mt-6 max-w-xl text-base leading-relaxed text-white/75 md:text-lg"
         >
-          Golden Spike designs premium catering experiences — from intimate
+          Golden Spike Events & Caterers designs premium catering experiences — from intimate
           gatherings to thousand-guest productions — with flawless service and
           atmosphere.
         </motion.p>

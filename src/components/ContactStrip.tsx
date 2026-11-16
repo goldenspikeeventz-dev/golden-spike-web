@@ -25,7 +25,7 @@ export default function ContactStrip() {
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-white/70">
           Speak with our events desk today — we&apos;ll align cuisine, crew, and
-          calendar for Kerala or Tamil Nadu.
+          calendar anywhere in Kerala.
         </p>
 
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">

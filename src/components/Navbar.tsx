@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { BRAND_NAME } from "@/lib/contact";
+import { BrandLogo } from "@/components/BrandLogo";
 import { cn } from "@/lib/utils";
 
 const links = [
@@ -50,14 +50,13 @@ export default function Navbar() {
       )}
     >
       <nav className="container-wide flex items-center justify-between px-6 py-4 md:py-5">
-        <Link
-          href="/"
-          className={cn(
-            "font-display text-xl font-semibold tracking-tight md:text-2xl",
-            transparent ? "text-white" : "text-foreground"
-          )}
-        >
-          {BRAND_NAME}
+        <Link href="/" className="inline-flex shrink-0 items-center overflow-visible">
+          <BrandLogo
+            variant="lockup"
+            tone={transparent ? "onDark" : "onLight"}
+            priority
+            className="h-8 max-h-11 w-auto max-w-[min(92vw,20rem)] sm:h-9 md:h-10 lg:h-11"
+          />
         </Link>
 
         <ul className="hidden items-center gap-10 md:flex">

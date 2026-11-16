@@ -1,5 +1,13 @@
 import Link from "next/link";
-import { BRAND_NAME, EMAIL_HREF, PHONE_HREF, SERVICE_AREAS } from "@/lib/contact";
+import { BrandLogo } from "@/components/BrandLogo";
+import {
+  BRAND_NAME,
+  EMAIL_HREF,
+  FACEBOOK_URL,
+  INSTAGRAM_URL,
+  PHONE_HREF,
+  SERVICE_AREAS,
+} from "@/lib/contact";
 
 const footerLinks = [
   { href: "/#about", label: "About" },
@@ -13,11 +21,13 @@ export default function Footer() {
     <footer className="border-t border-border bg-surface-dark text-white/80">
       <div className="container-wide section-pad grid gap-12 md:grid-cols-3">
         <div>
-          <p className="font-display text-2xl font-semibold text-white">
-            {BRAND_NAME}
-          </p>
+          <BrandLogo
+            variant="lockup"
+            tone="onDark"
+            className="h-10 w-auto max-w-full sm:h-11 sm:max-w-xs md:max-w-sm"
+          />
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/60">
-            Premium catering and event production across South India. We craft
+            Event management and premium catering across Kerala. We craft
             immersive celebrations with culinary precision and cinematic staging.
           </p>
         </div>
@@ -57,6 +67,24 @@ export default function Footer() {
             </li>
             <li className="pt-2 text-white/50">
               Serving {SERVICE_AREAS.join(" & ")}
+            </li>
+            <li className="flex flex-wrap gap-4 pt-4">
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white"
+              >
+                Instagram
+              </a>
+              <a
+                href={FACEBOOK_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white"
+              >
+                Facebook
+              </a>
             </li>
           </ul>
         </div>
