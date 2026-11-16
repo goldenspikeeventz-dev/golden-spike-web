@@ -1,14 +1,27 @@
-export const BRAND_NAME = "Golden Spike";
+export const BRAND_NAME = "Golden Spike Events & Caterers";
 
-export const PHONE_DISPLAY = "+91 98765 43210";
-export const PHONE_HREF = "tel:+919876543210";
+export const PHONES = [
+  { display: "+91 97446 70003", href: "tel:+919744670003" },
+  { display: "+91 97449 40003", href: "tel:+919744940003" },
+  { display: "+91 97446 50003", href: "tel:+919744650003" },
+] as const;
 
-export const EMAIL = "hello@goldenspikeevents.in";
+export const PHONE_DISPLAY = PHONES.map((p) => p.display).join(" · ");
+export const PHONE_HREF = PHONES[0].href;
+
+export const EMAIL = "Goldenspikeeventz@gmail.com";
 export const EMAIL_HREF = `mailto:${EMAIL}`;
 
-export const WHATSAPP_NUMBER = "919876543210";
+export const WHATSAPP_NUMBER = "919744670003";
 export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-  "Hello Golden Spike — I'd like to plan an event."
+  "Hello Golden Spike Events & Caterers — I'd like to plan an event."
 )}`;
 
-export const SERVICE_AREAS = ["Kerala", "Tamil Nadu"];
+export const INSTAGRAM_URL =
+  "https://www.instagram.com/goldenspike_events_caterers/?hl=en";
+export const FACEBOOK_URL = "https://www.facebook.com/goldenspikeevents/";
+
+export const HEADQUARTERS =
+  "Mathilakam, Kodungallur, Thrissur — serving all of Kerala";
+
+export const SERVICE_AREAS = ["Kerala"];
