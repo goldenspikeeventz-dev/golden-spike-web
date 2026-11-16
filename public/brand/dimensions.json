@@ -1,0 +1,18 @@
+{
+  "onDark": {
+    "width": 853,
+    "height": 448
+  },
+  "onLight": {
+    "width": 873,
+    "height": 460
+  },
+  "lockup": {
+    "width": 853,
+    "height": 448
+  },
+  "mark": {
+    "width": 290,
+    "height": 290
+  }
+}

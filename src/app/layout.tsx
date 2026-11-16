@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SmoothScroll from "@/components/providers/SmoothScroll";
+import { APPLE_ICON, ICON, OG_IMAGE } from "@/lib/brand";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -21,11 +22,32 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "Golden Spike Events | Premium Catering & Events",
-    template: "%s | Golden Spike Events",
+    default: "Golden Spike Events & Caterers",
+    template: "%s | Golden Spike Events & Caterers",
   },
   description:
-    "Cinematic event management and premium catering across Kerala and Tamil Nadu. Weddings, corporate gatherings, and bespoke celebrations.",
+    "Event management and premium catering across Kerala. Wedding planning, décor, customized menus, and full production for celebrations statewide.",
+  icons: {
+    icon: [{ url: ICON, type: "image/png" }],
+    apple: [{ url: APPLE_ICON, type: "image/png", sizes: "180x180" }],
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    siteName: "Golden Spike Events & Caterers",
+    images: [
+      {
+        url: OG_IMAGE,
+        width: 1200,
+        height: 630,
+        alt: "Golden Spike Events and Caterers",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: [OG_IMAGE],
+  },
 };
 
 export default function RootLayout({

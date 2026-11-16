@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef, useSyncExternalStore } from "react";
+import { BrandLogo } from "@/components/BrandLogo";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import { byId } from "@/lib/images";
 
 function subscribeReducedMotion(callback: () => void) {
   const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -37,9 +37,6 @@ export default function HeroSection() {
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.3]);
 
-  const primary = byId(17);
-  const depth = byId(20);
-
   return (
     <section
       ref={ref}
@@ -51,33 +48,23 @@ export default function HeroSection() {
       >
         {!reducedMotion ? (
           <video
-            className="absolute inset-0 h-full w-full object-cover"
-            src="/background_video.mp4"
+            className="absolute inset-0 h-full w-full object-cover object-[70%_center]"
+            src="/hero-cloche.mp4"
+            poster="/hero-cloche-closed.png"
             autoPlay
             muted
             loop
             playsInline
           />
-        ) : primary ? (
+        ) : (
           <Image
-            src={primary.src}
-            alt={primary.alt}
+            src="/hero-cloche-closed.png"
+            alt="Closed silver serving cloche on a dark table"
             fill
             priority
-            className="object-cover"
+            className="object-cover object-[70%_center]"
           />
-        ) : null}
-        {depth && reducedMotion ? (
-          <div className="absolute inset-0 opacity-40 mix-blend-overlay">
-            <Image
-              src={depth.src}
-              alt=""
-              fill
-              className="object-cover"
-              aria-hidden
-            />
-          </div>
-        ) : null}
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-[#12100e] via-[#12100e]/55 to-[#12100e]/30" />
       </motion.div>
 
@@ -85,13 +72,27 @@ export default function HeroSection() {
         className="container-wide relative z-10 px-6"
         style={reducedMotion ? undefined : { y: textY, opacity }}
       >
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.05 }}
+          className="pointer-events-none mb-6 w-full max-w-xl opacity-95 sm:max-w-2xl"
+        >
+          <BrandLogo
+            variant="lockup"
+            tone="onDark"
+            priority
+            className="h-auto w-auto max-w-full sm:max-w-lg md:max-w-xl lg:max-w-2xl"
+          />
+        </motion.div>
+
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
           className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-accent-light"
         >
-          Kerala & Tamil Nadu
+          Kerala
         </motion.p>
 
         <motion.h1
@@ -109,7 +110,7 @@ export default function HeroSection() {
           transition={{ duration: 0.7, delay: 0.35 }}
           className="mt-6 max-w-xl text-base leading-relaxed text-white/75 md:text-lg"
         >
-          Golden Spike designs premium catering experiences — from intimate
+          Golden Spike Events & Caterers designs premium catering experiences — from intimate
           gatherings to thousand-guest productions — with flawless service and
           atmosphere.
         </motion.p>

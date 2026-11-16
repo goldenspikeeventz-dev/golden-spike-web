@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "motion/react";
+import { MagneticButton } from "@/components/ui/MagneticButton";
 import { siteImages } from "@/lib/images";
 
 const spanPattern = [
@@ -17,16 +18,16 @@ const spanPattern = [
 
 export default function GalleryMasonry() {
   return (
-    <section className="section-pad">
-      <div className="container-wide grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 auto-rows-[220px] md:auto-rows-[260px]">
+    <section className="section-pad pt-10 md:pt-14">
+      <div className="container-wide grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-5 auto-rows-[220px] md:auto-rows-[260px]">
         {siteImages.map((image, i) => (
           <motion.figure
             key={image.id}
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-5%" }}
-            transition={{ delay: (i % 6) * 0.05, duration: 0.5 }}
-            className={`group relative min-h-[220px] overflow-hidden rounded-2xl ${
+            transition={{ delay: Math.min(i, 8) * 0.05, duration: 0.5 }}
+            className={`group relative min-h-[220px] overflow-hidden rounded-2xl shadow-lg ring-1 ring-black/10 transition-shadow hover:shadow-xl hover:ring-accent/40 ${
               spanPattern[i % spanPattern.length] ?? ""
             }`}
           >
@@ -46,6 +47,12 @@ export default function GalleryMasonry() {
             </figcaption>
           </motion.figure>
         ))}
+      </div>
+
+      <div className="container-wide mt-14 flex justify-center md:mt-16">
+        <MagneticButton href="/contact" variant="ghost">
+          Plan your event
+        </MagneticButton>
       </div>
     </section>
   );

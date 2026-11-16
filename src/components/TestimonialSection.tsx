@@ -18,7 +18,7 @@ const testimonials = [
     quote:
       "Our annual leadership summit needed precision plating for 600 covers. Their kitchen lead ran the floor like a choreographed production.",
     name: "Rahul Menon",
-    designation: "HR Director, Chennai",
+    designation: "HR Director, Kochi",
     src: testimonialImages[1]?.src ?? "/img/image_12.jpeg",
   },
   {

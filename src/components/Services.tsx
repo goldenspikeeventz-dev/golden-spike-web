@@ -7,33 +7,35 @@ import { byId } from "@/lib/images";
 
 const services = [
   {
-    title: "Restaurants & food courts",
-    description: "High-volume dining with consistent quality and rapid service.",
+    title: "Wedding planning & décor",
+    description:
+      "Stages, venues, florals, and timelines coordinated with your vision.",
     imageId: 1,
   },
   {
-    title: "Bake house",
-    description: "Signature breads, pastries, and celebration cakes from our ovens.",
+    title: "Customized catering",
+    description:
+      "Menus engineered for your guest list, traditions, and service style.",
     imageId: 2,
   },
   {
-    title: "Bakers & confectionaries",
-    description: "Artisan desserts and live confection counters for guest delight.",
+    title: "Live entertainment",
+    description: "DJs, emcees, live music, and programming that keeps energy high.",
     imageId: 3,
   },
   {
-    title: "Golden Spike catering",
-    description: "End-to-end catering for weddings, receptions, and private events.",
+    title: "Wedding & reception catering",
+    description: "End-to-end food service for weddings, receptions, and private events.",
     imageId: 4,
   },
   {
-    title: "Corporate catering",
+    title: "Corporate events",
     description: "Boardrooms, offsites, and galas with executive-level presentation.",
     imageId: 5,
   },
   {
-    title: "Tourism catering",
-    description: "Hospitality programs for resorts, festivals, and visitor experiences.",
+    title: "Lighting & equipment",
+    description: "Sound, lighting, rentals, and guest management on event day.",
     imageId: 6,
   },
 ];
@@ -45,7 +47,7 @@ export default function Services() {
         <SectionHeading
           label="What we do"
           title="Six disciplines, one golden standard"
-          description="From our own restaurants to the largest temporary kitchens, every service line shares the same commitment to timing, taste, and guest care."
+          description="From intimate gatherings to large productions, every line of service shares the same commitment to timing, taste, and guest care."
         />
 
         <motion.div
