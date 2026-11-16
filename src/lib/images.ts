@@ -35,8 +35,8 @@ export const siteImages: SiteImage[] = [
   img(18, "Plated fine dining course", "Precision in every plate", ["about", "gallery"]),
   img(19, "Evening ambient lighting at venue", "Atmosphere & staging", ["why", "gallery"]),
   img(20, "Large-scale event floor", "Scale without compromise", ["hero", "gallery"]),
-  img(21, "Traditional Kerala spread", "Regional culinary mastery", ["gallery"]),
   img(22, "Night celebration with warm lighting", "Unforgettable finales", ["hero", "gallery"]),
+  img(23, "Wedding stage with white florals and gold seating", "Wedding stage design", ["gallery"]),
 ];
 
 export const byTag = (tag: string) => siteImages.filter((i) => i.tags.includes(tag));

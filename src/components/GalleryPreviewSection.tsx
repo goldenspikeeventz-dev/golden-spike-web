@@ -6,7 +6,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { byId } from "@/lib/images";
 
-const previewIds = [21, 22, 1, 14];
+const previewIds = [23, 22, 1, 14];
 
 export default function GalleryPreviewSection() {
   return (
