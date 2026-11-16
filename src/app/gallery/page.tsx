@@ -4,7 +4,7 @@ import GalleryMasonry from "@/components/GalleryMasonry";
 export const metadata: Metadata = {
   title: "Gallery",
   description:
-    "Event photography and production moments from Golden Spike across Kerala and Tamil Nadu.",
+    "Event photography and production moments from Golden Spike Events & Caterers across Kerala.",
 };
 
 export default function GalleryPage() {
