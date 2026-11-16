@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { createPortal } from "react-dom";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { BrandLogo } from "@/components/BrandLogo";
 import { cn } from "@/lib/utils";
 
@@ -15,11 +16,16 @@ const links = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  const reduceMotion = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [mobileMenuAtPath, setMobileMenuAtPath] = useState<string | null>(null);
-  const open = mobileMenuOpen && mobileMenuAtPath === pathname;
+  const [mounted, setMounted] = useState(false);
+  const open = mobileMenuOpen;
   const onHome = pathname === "/";
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 48);
@@ -28,17 +34,68 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
+  const closeMobileMenu = () => setMobileMenuOpen(false);
+
   const toggleMobileMenu = () => {
-    if (open) {
-      setMobileMenuOpen(false);
-      setMobileMenuAtPath(null);
-    } else {
-      setMobileMenuOpen(true);
-      setMobileMenuAtPath(pathname);
-    }
+    setMobileMenuOpen((prev) => !prev);
   };
 
   const transparent = onHome && !scrolled;
+
+  const mobileDrawer = (
+    <AnimatePresence>
+      {open ? (
+        <motion.div
+          key="mobile-nav-drawer"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Site navigation"
+          initial={{ opacity: reduceMotion ? 1 : 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[100] flex flex-col bg-surface-dark px-8 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-[max(7rem,env(safe-area-inset-top))] md:hidden"
+        >
+          <ul className="flex flex-col gap-8">
+            {links.map((item, i) => (
+              <li
+                key={item.href}
+                className={reduceMotion ? undefined : "opacity-0"}
+                style={
+                  reduceMotion
+                    ? undefined
+                    : {
+                        animation: "navbar-link-in 0.45s ease forwards",
+                        animationDelay: `${i * 0.06}s`,
+                      }
+                }
+              >
+                <Link
+                  href={item.href}
+                  className="font-display text-4xl text-white"
+                  onClick={closeMobileMenu}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
+  );
 
   return (
     <header
@@ -46,14 +103,15 @@ export default function Navbar() {
         "fixed top-0 z-50 w-full transition-colors duration-300",
         transparent
           ? "border-transparent bg-transparent"
-          : "border-b border-border bg-background/85 backdrop-blur-md"
+          : "border-b border-border bg-background/85 backdrop-blur-md",
+        open && "md:border-b md:border-border md:bg-background/85"
       )}
     >
       <nav className="container-wide flex items-center justify-between px-6 py-4 md:py-5">
         <Link href="/" className="inline-flex shrink-0 items-center overflow-visible">
           <BrandLogo
             variant="lockup"
-            tone={transparent ? "onDark" : "onLight"}
+            tone={transparent && !open ? "onDark" : "onLight"}
             priority
             className="h-8 max-h-11 w-auto max-w-[min(92vw,20rem)] sm:h-9 md:h-10 lg:h-11"
           />
@@ -83,9 +141,15 @@ export default function Navbar() {
         <button
           type="button"
           aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
           className={cn(
-            "relative z-[60] flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden",
-            transparent ? "text-white" : "text-foreground"
+            "relative z-[110] flex h-11 w-11 shrink-0 flex-col items-center justify-center gap-1.5 rounded-full md:hidden",
+            "ring-1 transition-colors",
+            open && "bg-white/10 text-white ring-white/25",
+            !open &&
+              transparent &&
+              "bg-black/35 text-white backdrop-blur-sm ring-white/20",
+            !open && !transparent && "bg-foreground/5 text-foreground ring-border"
           )}
           onClick={toggleMobileMenu}
         >
@@ -110,38 +174,7 @@ export default function Navbar() {
         </button>
       </nav>
 
-      <AnimatePresence>
-        {open ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex flex-col bg-surface-dark px-8 pt-28 md:hidden"
-          >
-            <ul className="flex flex-col gap-8">
-              {links.map((item, i) => (
-                <motion.li
-                  key={item.href}
-                  initial={{ opacity: 0, x: -16 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.06 }}
-                >
-                  <Link
-                    href={item.href}
-                    className="font-display text-4xl text-white"
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      setMobileMenuAtPath(null);
-                    }}
-                  >
-                    {item.label}
-                  </Link>
-                </motion.li>
-              ))}
-            </ul>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+      {mounted ? createPortal(mobileDrawer, document.body) : null}
     </header>
   );
 }
