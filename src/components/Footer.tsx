@@ -11,7 +11,7 @@ import {
 
 const footerLinks = [
   { href: "/#about", label: "About" },
-  { href: "/#services", label: "Services" },
+  { href: "/services", label: "Services" },
   { href: "/gallery", label: "Gallery" },
   { href: "/contact", label: "Contact" },
 ];

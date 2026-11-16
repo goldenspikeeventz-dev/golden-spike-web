@@ -10,6 +10,11 @@ import { cn } from "@/lib/utils";
 
 const links = [
   { href: "/#about", label: "About", match: (p: string) => p === "/" },
+  {
+    href: "/services",
+    label: "Services",
+    match: (p: string) => p.startsWith("/services"),
+  },
   { href: "/gallery", label: "Gallery", match: (p: string) => p.startsWith("/gallery") },
   { href: "/contact", label: "Contact", match: (p: string) => p.startsWith("/contact") },
 ];
